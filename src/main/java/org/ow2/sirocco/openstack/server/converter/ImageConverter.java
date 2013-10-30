@@ -76,7 +76,6 @@ public class ImageConverter {
         dataOpenstack.setCreated(dataService.getCreated());
         dataOpenstack.setUpdated(dataService.getUpdated());
         dataOpenstack.setTenantId(String.valueOf(dataService.getTenant().getId()));
-        dataOpenstack.setMinDisk(dataService.getCloudProviderAccount().getCloudProvider().);
 
         String userId = String.valueOf(dataService.getTenant().getUsers().get(0).getId());
         dataOpenstack.setUserId(userId);
