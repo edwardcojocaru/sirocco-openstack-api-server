@@ -22,63 +22,64 @@
 package org.ow2.sirocco.openstack.server.manager;
 
 import org.ow2.sirocco.cloudmanager.core.api.IMachineManager;
-import org.ow2.sirocco.cloudmanager.core.api.exception.CloudProviderException;
-import org.ow2.sirocco.cloudmanager.core.api.exception.ResourceNotFoundException;
 import org.ow2.sirocco.cloudmanager.model.cimi.Machine;
-import org.ow2.sirocco.cloudmanager.model.cimi.MachineCreate;
-import org.ow2.sirocco.openstack.server.domain.Server;
 import org.ow2.sirocco.openstack.server.request.MessageContext;
 import org.ow2.sirocco.openstack.server.request.Request;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.Response;
+import java.util.Map;
 
 /**
- * User: Eduard.Cojocaru
- * Date: 10/10/13
+ * Created with IntelliJ IDEA.
+ * User: Silvia.Pacurici
+ * Date: 16/10/13
+ * Time: 15:08
+ * To change this template use File | Settings | File Templates.
  */
-@OpenStackManager("ServerManager")
-public class ServerManager extends AbstractManager {
+
+@OpenStackManager("ServerMetadataManager")
+public class ServerMetadataManager extends ServerManager {
 
     @Inject
     private IMachineManager manager;
 
+
     @Override
     protected Object convertToDataService(MessageContext context) throws Exception {
-      return null;
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    protected Machine getMachineFromRequest(Request request) throws CloudProviderException {
-        final String requestId = request.getIds().getId();
-        Machine machine = null;
-        if (requestId != null) {
-            machine = this.manager.getMachineById(requestId);
-        }
-        return machine;
+    @Override
+    protected void convertToResponse(MessageContext context, Object dataService) throws Exception {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     protected Object read(MessageContext context, Object dataService) throws Exception {
-        Object out = getMachineFromRequest(context.getRequest());
-        if (out == null) {
-            if (!context.hasParamsForReadingCollection()) {
-                out = this.manager.getMachines();
-            } else {
-//            QueryResult<?> results = this.manager.getMachines(context.valueOfFirst(), context.valueOfLast(),
-//                    context.valuesOfFilter(), context.valuesOfSelect());
-//            out = results.getItems();
+        Object out = null;
+        Request request = context.getRequest();
+        /*final String requestKey = request.getKey();
 
+        Machine requestMachine = getMachineFromRequest(request);
+        if (requestMachine != null) {
+            if (requestKey != null) {
+                requestMachine.getProperties().get(requestKey);
+            } else if (!context.hasParamsForReadingCollection()) {
+                out = requestMachine.getProperties();
+            } else {
                 // TODO must be checked if the EJB layer should be improved
             }
-        }
-        context.getResponse().setStatus(Response.Status.OK);
-        context.getResponse().setResponseData(out);
+        }*/
         return out;
     }
 
     @Override
     protected Object create(MessageContext context, Object dataService) throws Exception {
-        return this.manager.createMachine((MachineCreate) dataService);
+        Machine requestMachine = getMachineFromRequest(context.getRequest());
+        if (requestMachine != null) {
+            requestMachine.setProperties((Map<String, String>) dataService);
+        }
+        return read(context, dataService);
     }
 
     @Override
@@ -89,10 +90,5 @@ public class ServerManager extends AbstractManager {
     @Override
     protected Object delete(MessageContext context, Object dataService) throws Exception {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    protected void convertToResponse(MessageContext context, Object dataService) throws Exception {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

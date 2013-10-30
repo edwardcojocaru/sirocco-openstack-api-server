@@ -8,8 +8,9 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>sirocco-openstack-api-server</artifactId>
+	<groupId>org.ow2.sirocco.openstack</groupId>
+    <artifactId>sirocco-openstack-api-server</artifactId>	
+	<version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>SIROCCO :: OpenStack :: API :: Server :: Webapp</name>
 

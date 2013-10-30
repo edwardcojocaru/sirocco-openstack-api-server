@@ -30,5 +30,12 @@ public final class ConstantsPath {
 
     public static final String SERVERS_PATH_V2 = "/" + SERVERS_V2;
 
+    public static final String SERVER_METADATA_PATH_V2 = "/" + SERVERS_V2 + "/{id}/metadata";
+
+    public static final String IMAGES_V2 = "v2/images";
+
+    public static final String IMAGES_PATH_V2 = "/" + IMAGES_V2;
+
+    public static final String IMAGE_METADATA_PATH_V2 = "/" + IMAGES_V2 + "/​{id}​/metadata/";
 
 }

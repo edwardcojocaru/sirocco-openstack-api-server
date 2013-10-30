@@ -22,13 +22,23 @@
 package org.ow2.sirocco.openstack.server.request;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 
 public class MessageContext implements Serializable {
 
     public Request request;
-
     public Response response;
     private Object callServiceHelper;
+
+    public MessageContext() {
+
+    }
+
+    public MessageContext(final Request request, final Response response) {
+        super();
+        this.request = request;
+        this.response = response;
+    }
 
     public Request getRequest() {
         return request;
@@ -55,7 +65,16 @@ public class MessageContext implements Serializable {
     }
 
     public boolean hasParamsForReadingCollection() {
-        // TODO implement this method based on available parameters
-        return false;  //To change body of created methods use File | Settings | File Templates.
+        boolean has = false;
+      /*  if ((false == this.getRequest().getParams().getCimiFirst().isEmpty())) {
+            has = true;
+        } else if ((false == this.getRequest().getParams().getCimiLast().isEmpty())) {
+            has = true;
+        } else if ((false == this.getRequest().getParams().getCimiFilter().isEmpty())) {
+            has = true;
+        } else if ((false == this.getRequest().getParams().getCimiSelect().isEmpty())) {
+            has = true;
+        }*/
+        return has;
     }
 }

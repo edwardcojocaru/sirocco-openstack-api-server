@@ -19,6 +19,7 @@
  * USA
  */
 
+
 package org.ow2.sirocco.openstack.server.resource;
 
 import org.ow2.sirocco.openstack.server.manager.IManager;
@@ -34,44 +35,28 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
 
 /**
- * User: Eduard.Cojocaru
- * Date: 10/10/13
+ * Created with IntelliJ IDEA.
+ * User: Silvia.Pacurici
+ * Date: 21/10/13
  */
 
 @ResourceInterceptorBinding
 @RequestScoped
-@Path(ConstantsPath.SERVERS_PATH_V2)
-public class ServerRestResource extends RestResourceAbstract {
+@Path(ConstantsPath.IMAGES_PATH_V2)
+public class ImageRestResource extends RestResourceAbstract {
 
     @Inject
-    @OpenStackManager("ServerManager")
-    private IManager machineManager;
+    @OpenStackManager("ImageManager")
+    private IManager imageManager;
 
     @GET
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response read(@QueryParam("image") final String imageRef,
-                         @QueryParam("flavor") final String flavorRef,
-                         @QueryParam("name") final String serverName,
-                         @QueryParam("status") final String serverStatus,
-                         @QueryParam("marker") final String markerId,
-                         @QueryParam("limit") final int limit,
-                         @QueryParam("changes-since") final Date from) {
+    public Response read() {
 
         MessageContext messageContext = MessageContextHelper.buildContext(this.getJaxRsRequestInfos());
-        machineManager.execute(messageContext, IManager.OperationEnum.READ);
-        return ResponseHelper.buildResponse(messageContext.getResponse());
-    }
-
-    @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response create(final Object createObject) {
-        // TODO add request object to domain
-
-        MessageContext messageContext = null; // TODO create MessageContext
-        machineManager.execute(messageContext, IManager.OperationEnum.READ);
+        imageManager.execute(messageContext, IManager.OperationEnum.READ);
         return ResponseHelper.buildResponse(messageContext.getResponse());
     }
 
@@ -81,7 +66,7 @@ public class ServerRestResource extends RestResourceAbstract {
     public Response readDetails() {
 
         MessageContext messageContext = null; // TODO create MessageContext
-        machineManager.execute(messageContext, IManager.OperationEnum.READ);
+        imageManager.execute(messageContext, IManager.OperationEnum.READ);
         //ResponseHelper.buildResponse(context.getResponse());
         // TODO create response builder
 
@@ -95,22 +80,8 @@ public class ServerRestResource extends RestResourceAbstract {
 
         IdRequest idsRequest = new IdRequest(id);
         MessageContext messageContext = MessageContextHelper.buildContext(this.getJaxRsRequestInfos(), idsRequest);
-        machineManager.execute(messageContext, IManager.OperationEnum.READ);
+        imageManager.execute(messageContext, IManager.OperationEnum.READ);
         return ResponseHelper.buildResponse(messageContext.getResponse());
-    }
-
-    @PUT
-    @Path("/{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Response update(@PathParam("id") final String id, final Object updateObject) {
-        // TODO add request object to domain
-
-
-        MessageContext messageContext = null; // TODO create MessageContext
-        machineManager.execute(messageContext, IManager.OperationEnum.UPDATE);
-        //ResponseHelper.buildResponse(context.getResponse());
-        // TODO create response builder
-        return null;
     }
 
     @DELETE
@@ -118,9 +89,8 @@ public class ServerRestResource extends RestResourceAbstract {
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public Response delete(@PathParam("id") final String id) {
 
-        IdRequest idsRequest = new IdRequest(id);
         MessageContext messageContext = null; // TODO create MessageContext
-        machineManager.execute(messageContext, IManager.OperationEnum.DELETE);
+        imageManager.execute(messageContext, IManager.OperationEnum.DELETE);
         //ResponseHelper.buildResponse(context.getResponse());
         // TODO create response builder
         return null;

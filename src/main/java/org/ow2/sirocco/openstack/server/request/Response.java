@@ -28,6 +28,7 @@ public class Response implements Serializable {
     private int status;
     private String errorMessage;
     private boolean committed;
+    public Object responseData;
 
     /**
      * Get the status code.
@@ -75,5 +76,13 @@ public class Response implements Serializable {
 
     public String getErrorMessage() {
         return errorMessage;
+    }
+
+    public Object getResponseData() {
+        return responseData;
+    }
+
+    public void setResponseData(Object responseData) {
+        this.responseData = responseData;
     }
 }
